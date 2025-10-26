@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Évaluation SST - Traçabilité</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e2530;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #2d3647;
+      border: 1px solid #444c5e;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #ffffff;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #a9b4c9;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    /* Bloc identification */
+    .ident-block {
+      background: #3a455d;
+      border-radius: 8px;
+      border: 1px solid #55607a;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #e5ecff;
+    }
+
+    .ident-header-line {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .id-status {
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .ident-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .ident-field {
+      flex: 1;
+      min-width: 160px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ident-label {
+      font-size: 12px;
+      color: #c9d2ea;
+      margin-bottom: 4px;
+    }
+
+    .ident-input {
+      background: #2d3647;
+      border: 1px solid #55607a;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 13px;
+      padding: 8px;
+    }
+
+    .id-save-btn {
+      background: #4be1a8;
+      color: #0d1a1f;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 8px 12px;
+      cursor: pointer;
+      height: fit-content;
+      align-self: flex-start;
+    }
+    .id-save-btn:active {
+      transform: scale(0.98);
+    }
+
+    .small-note {
+      font-size: 11px;
+      color: #a9b4c9;
+      line-height: 1.4;
+    }
+
+    /* Bloc question */
+    .question-block {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #3a455d;
+      border-radius: 8px;
+      border: 1px solid #55607a;
+    }
+
+    .question-number {
+      font-size: 12px;
+      color: #a9b4c9;
+      margin-bottom: 8px;
+    }
+
+    .question-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .hint {
+      font-size: 12px;
+      font-style: italic;
+      color: #c9d2ea;
+      margin-bottom: 12px;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: flex-start;
+      text-align: left;
+      width: 100%;
+      background: #2d3647;
+      border: 1px solid #55607a;
+      color: #f0f0f0;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .option-btn.active {
+      background: #1f2a3f;
+      border: 2px solid #4be1a8;
+      color: #eafff7;
+      font-weight: bold;
+    }
+
+    .option-label {
+      font-size: 11px;
+      font-weight: bold;
+      min-width: 22px;
+      text-align: center;
+      line-height: 1.4;
+      background: #55607a;
+      color: #fff;
+      border-radius: 4px;
+      padding: 4px 6px;
+      margin-right: 10px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    button.ctrl {
+      flex: 1;
+      background: #4be1a8;
+      border: none;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #0d1a1f;
+    }
+    button.ctrl[disabled] {
+      background: #3d4a5f;
+      color: #778394;
+      cursor: not-allowed;
+    }
+    #finishBtn {
+      background: #7c6cff;
+      color: #fff;
+      display: none;
+    }
+
+    /* Résultats */
+    #result-card {
+      display: none;
+      margin-top: 30px;
+      background: #2e3445;
+      border: 1px solid #5d6280;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    #score-line {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+    #feedback-global {
+      font-size: 13px;
+      color: #c9d2ea;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .detail-block {
+      background: #3a455d;
+      border-radius: 8px;
+      border: 1px solid #55607a;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      color: #e5ecff;
+    }
+    .detail-head {
+      font-weight: bold;
+      color: #fff;
+      font-size: 13px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .badge-ok {
+      background: #1f3b2f;
+      color: #4be1a8;
+      border: 1px solid #4be1a8;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    .badge-err {
+      background: #40242b;
+      color: #ff8b9a;
+      border: 1px solid #ff8b9a;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    .justif {
+      font-size: 12px;
+      color: #c9d2ea;
+      font-style: italic;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .export-zone {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #5d6280;
+      font-size: 12px;
+      color: #c9d2ea;
+    }
+    .export-btn {
+      background: #4be1a8;
+      color: #0d1a1f;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 10px 12px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .export-btn:active {
+      transform: scale(0.98);
+    }
+    .export-hint {
+      font-size: 11px;
+      color: #a9b4c9;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Jean-Philippe FAGET – Formation SST</h1>
+  <div class="meta">
+    Auto-évaluation SST (10 situations).<br>
+    Renseigner l'identité pour générer un bilan archivable.
+  </div>
+
+  <!-- IDENTIFICATION STAGIAIRE -->
+  <div class="ident-block">
+    <div class="ident-header-line">
+      <span>Identification stagiaire</span>
+      <span id="id-status" class="id-status" style="color:#a9f2d6;">Non validée</span>
+    </div>
+
+    <div class="ident-row">
+      <div class="ident-field">
+        <label class="ident-label" for="nomInput">Nom / Prénom *</label>
+        <input id="nomInput" class="ident-input" placeholder="Ex : Martin Dupont">
+      </div>
+
+      <div class="ident-field">
+        <label class="ident-label" for="serviceInput">Fonction / Service (optionnel)</label>
+        <input id="serviceInput" class="ident-input" placeholder="Ex : Maintenance / Logistique">
+      </div>
+
+      <button id="idSaveBtn" class="id-save-btn">Valider</button>
+    </div>
+
+    <div class="small-note">
+      Ces informations apparaîtront sur le bilan final exporté.
+    </div>
+  </div>
+
+  <!-- QUESTION / RÉPONSES -->
+  <div class="question-block">
+    <div id="question-number" class="question-number"></div>
+    <div id="question-text" class="question-title"></div>
+    <div id="question-hint" class="hint"></div>
+
+    <div id="options-zone"></div>
+
+    <div class="controls">
+      <button id="prevBtn" class="ctrl">← Précédent</button>
+      <button id="nextBtn" class="ctrl">Suivant →</button>
+      <button id="finishBtn" class="ctrl" style="display:none;">Terminer ✅</button>
+    </div>
+  </div>
+
+  <!-- Bloc Résultats -->
+  <div id="result-card">
+    <div id="score-line"></div>
+    <div id="feedback-global"></div>
+    <div id="details-zone"></div>
+
+    <div class="export-zone">
+      <div>Exporter le bilan stagiaire (score + axes de renforcement).</div>
+      <button id="exportBtn" class="export-btn">Exporter le bilan stagiaire</button>
+      <div class="export-hint">
+        Le navigateur génère un .html local.<br>
+        Ouvre-le puis Imprimer → Enregistrer en PDF.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- On charge la logique quiz depuis un fichier séparé -->
+<script src="quiz_logic.js"></script>
+
+</body>
+</html>
